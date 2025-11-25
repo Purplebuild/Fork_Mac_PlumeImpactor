@@ -9,9 +9,9 @@ pub struct AccountCredentials;
 impl AccountCredentials {
     pub fn set_credentials(&self, email: String, password: String) -> Result<(), Error> {
         let entry_email = Entry::new(KEYRING_SERVICE, KEYRING_EMAIL)?;
-        let entry_pass = Entry::new(KEYRING_SERVICE, KEYRING_PASS)?;
-        entry_email.set_secret(email.as_bytes())?;
-        entry_pass.set_secret(password.as_bytes())?;
+        let entry_pass  = Entry::new(KEYRING_SERVICE, KEYRING_PASS)?;
+        entry_email.set_password(&email)?;
+        entry_pass.set_password(&password)?;
         Ok(())
     }
 
@@ -28,8 +28,10 @@ impl AccountCredentials {
     pub fn delete_password(&self) -> Result<(), Error> {
         let entry_email = Entry::new(KEYRING_SERVICE, KEYRING_EMAIL)?;
         let entry_pass = Entry::new(KEYRING_SERVICE, KEYRING_PASS)?;
+
         entry_email.delete_credential()?;
         entry_pass.delete_credential()?;
+
         Ok(())
     }
 }
