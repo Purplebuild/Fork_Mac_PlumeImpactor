@@ -15,14 +15,6 @@ macro_rules! developer_endpoint {
 }
 
 // Apple apis restrict certain characters in app names
-pub fn strip_invalid_chars(str: &str) -> String {
-    const INVALID_CHARS: &[char] = &['\\', '/', ':', '*', '?', '"', '<', '>', '|', '.'];
-
-    str.chars()
-        .filter(|c| 
-            c.is_ascii() 
-            && !c.is_control() 
-            && !INVALID_CHARS.contains(c)
-        )
-        .collect()
+pub fn strip_invalid_chars(s: &str) -> String {
+    s.chars().filter(|c| c.is_ascii_alphabetic()).collect()
 }
